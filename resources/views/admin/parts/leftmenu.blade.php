@@ -13,23 +13,6 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            გვერდები / Pages
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/examples/contact-us.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>მთავარი გვერდი</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
                     <a href="{{route('menu')}}" class="nav-link">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
@@ -54,15 +37,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('news.post')}}" class="nav-link">
                         <i class="nav-icon far fa-newspaper"></i>
                         <p>
                             სიახლეები / News
                         </p>
                     </a>
                 </li>
-
-
-
+            </ul>
+        </nav>
+    </div>
     <!-- /.sidebar -->
 </aside>

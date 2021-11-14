@@ -3,6 +3,9 @@
 
 namespace App\Http\Controllers\tekle;
 
+use App\Http\Controllers\tekle\traites\blogEdit;
+use App\Http\Controllers\tekle\traites\blogCreate;
+use App\Http\Controllers\tekle\traites\exmple;
 use App\Menu;
 use App\Http\Controllers\Controller;
 use App\Post;
@@ -11,92 +14,46 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
-class PostController extends Controller
+class PostController extends Controller implements exmple //interface - კლასის შემადგენელი ნაწილი რომელიც  ფუნქციებს ინახავს და რომ გვჭირდება ვიყენებთ.
 {
-
+use blogEdit; //trait - კლასის შემადგენელი ნაწილი, დამოუკიდებელი შვილობილი.
+use blogCreate;
     public function post()
     {
-        $post = Post::get();
+        $post = POST::where('type', '!=', 'news')->get();
         return view('admin.page.blog', compact('post'));
 
     }
 
-    public function create(Request $request)
-    {
-
-        $drop = Post::whereNull('img')->get();
-        $menuitem = Menu::all();
-
-
-        if ($request->method() == 'POST') {
-            $validated = $request->validate([
-                'title' => 'required|max:255',
-                'sort' => 'required|integer|max:11',
-                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'menu_item' => 'required|max:255',
-                'description' => 'required|max:255',
-                'status' => 'accepted'
-            ]);
-
-            if (isset($validated['img'])&&!empty($validated['img'])){
-                $path = '/img';
-                $storage = Storage::disk('public_uploads')->put($path, $validated['img']);
-            }
-
-
-//    dd($storage);
-            $post = Post::create(['title' => $validated['title'],
-                'sort' => $validated['sort'],
-                'img' => isset($storage) ? $storage : null,
-                'menu_item' => $validated['menu_item'],
-                'description' => $validated['description'],
-                'status' => $validated['status']== 'on' ? 1 : 0 ,
-                'user_id' => Auth::id()
-            ]);
-
-        }
-
-
-        return view('admin.page.blogcreate', compact('drop', 'menuitem'));
-    }
-
-
-    public function edit($postId = 0, Request $request)
-    {
-        $drop = Post::whereNull('img')->get();
-        $postedit = Post::where('id', '=', $postId)->first();
-
-        if ($request->method() == 'POST') {
-            $validated = $request->validate([
-                'title' => 'required|max:255',
-                'sort' => 'required|integer|min:1|max:11',
-                'img' => 'nullable|max:255',
-                'menu_item' => 'required|max:255',
-                'description' => 'required|max:255',
-                'status' => 'accepted',
-
-
-            ]);
-
-            Post::whereId($postId)->update(['title' => $validated['title'],
-                'sort' => $validated['sort'],
-                'img' => $validated['img'] > 0 ? $validated['img'] : null,
-                'menu_item' => $validated['menu_item'],
-                'description' => $validated['description'],
-                'status' => $validated['status']== 'on' ? 1 : 0 ,
-
-            ]);
-
-            return back();
-        }
-
-
-        return view('admin.page.blogedit', compact('postedit', 'drop'));
-    }
 
     public function delete($postId = 0)
     {
         Post::whereId($postId)->delete();
         return back();
+    }
+
+    //interface-ის აბსტრაქტული ფუნქცია (მასში შემავალი)
+    public function something()
+    {
+        // TODO: Implement something() method.
+    }
+
+    public function news()
+    {
+        $menuitem = Menu::all();
+        $news = Post::where('type', '=', 'news')->get();
+        return view('admin.page.newscreate', compact('news', 'menuitem'));
+
+    }
+
+    public function newsPost(){
+        $post = POST::where('type', '=', 'news')->get();
+        return view('admin.page.news', compact('post'));
+    }
+
+    public function newsEdit($postId = 0){
+        $drop = Post::whereNull('img')->get();
+        $postedit = Post::where('id', '=', $postId)->first();
+        return view('admin.page.newsedit', compact('postedit', 'drop'));
     }
 }

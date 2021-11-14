@@ -32,8 +32,8 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Sort</th>
+                                    <th>სათაური</th>
+                                    <th>სორტირება</th>
                                     <th>Updated at</th>
                                     <th>Edit</th>
                                 </tr>

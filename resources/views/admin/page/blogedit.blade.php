@@ -12,7 +12,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="POST" action="{{route('post.edit.post', ['postId'=>$postedit->id])}}">
+                        <form method="POST" enctype="multipart/form-data" action="{{route('post.edit.post', ['postId'=>$postedit->id])}}">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -31,18 +31,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">Image</label>
+                                    <a target="_blank" href="{{asset('uploads/'.$postedit->img)}}">{{$postedit->img}}</a>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input @error('img') is-invalid @enderror" id="exampleInputFile" name="img">
-                                            @error('img')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                            @enderror
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
                                         <div class="input-group-append">
                                             <span class="input-group-text">Upload</span>
                                         </div>
                                     </div>
+                                    @error('img')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputMenuItem">Menu Item</label>
@@ -54,13 +55,23 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="exampleInputDescription">Description</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" rows="3" placeholder="Enter ..." name="description"></textarea>
-                                        @error('text')
+                                        <textarea class="form-control @error('description') is-invalid @enderror" rows="3" placeholder="Enter ..." name="description">{{ $postedit->description }}</textarea>
+                                        @error('description')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Type</label>
+                                    <select class="custom-select rounded-0 @error('type') is-invalid @enderror" id="exampleInputType" name="type">
+                                        <option value="">choose</option>
+                                        <option @if($postedit->type=='POST') selected="selected" @endif value="POST">post</option>
+                                        <option @if($postedit->type=='BLOG') selected="selected" @endif value="BLOG">blog</option>
+                                    </select>
+                                    @error('type')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                      <div class="form-group">
                                         <label for="customSwitch3">Status</label>
                                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -71,7 +82,6 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                             </div>
 
                             <!-- /.card-body -->

@@ -15,6 +15,10 @@ Route::prefix('tekle')->group(function (){
     Route::get('/blog/edit/{postId}','PostController@edit')->name('post.edit');
     Route::post('/blog/edit/{postId}','PostController@edit')->name('post.edit.post');
     Route::get('/blog/delete/{postId}','PostController@delete')->name('post.delete');
+    Route::get('/news', 'PostController@news')->name('news');
+    Route::get('/news/table', 'PostController@newsPost')->name('news.post');
+    Route::get('/news/edit/{postId}', 'PostController@newsEdit')->name('news.edit');
+
 });
 
 

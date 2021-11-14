@@ -44,13 +44,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="exampleInputMenuItem">Menu Item</label>--}}
-{{--                                    <input type="text" class="form-control @error('menu_item') is-invalid @enderror" id="exampleInputMenuItem" name="menu_item" placeholder="Menu item" value="{{ old('menu_item') }}">--}}
-{{--                                    @error('menu_item')--}}
-{{--                                    <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
+
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Menu item</label>
                                     <select class="custom-select rounded-0 @error('menu_item') is-invalid @enderror" id="exampleInputDropdown" name="menu_item">
@@ -72,7 +66,17 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="exampleInputType">Type</label>
+                                    <select class="custom-select rounded-0 @error('type') is-invalid @enderror" id="exampleInputType" name="type">
+                                        <option value="">choose</option>
+                                            <option value="POST">post</option>
+                                            <option value="BLOG">blog</option>
+                                    </select>
+                                    @error('type')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                     <div class="form-group">
                                         <label for="customSwitch3">Status</label>
                                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
