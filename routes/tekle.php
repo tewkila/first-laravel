@@ -18,6 +18,10 @@ Route::prefix('tekle')->group(function (){
     Route::get('/news', 'PostController@news')->name('news');
     Route::get('/news/table', 'PostController@newsPost')->name('news.post');
     Route::get('/news/edit/{postId}', 'PostController@newsEdit')->name('news.edit');
+    Route::get('/gallery', 'GalleryController@post')->name('gallery');
+    Route::match(['GET', 'POST'],'/gallery/create', 'GalleryController@create')->name('gallery.create');
+    Route::get('/gallery/create/multiple', 'GalleryController@multiple')->name('gallery.create.multiple');
+
 
 });
 
